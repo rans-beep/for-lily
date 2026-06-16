@@ -467,40 +467,54 @@
             font-size: 0.75rem;
         }
 
-        .music-indicator {
+        /* ===== BUTTON PLAY MUSIC ===== */
+        .music-btn {
             position: fixed;
             bottom: 20px;
             right: 20px;
             z-index: 9999;
-            background: rgba(255, 45, 117, 0.12);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 45, 117, 0.2);
+            background: linear-gradient(135deg, #ff2d75, #ff6b9d);
+            border: none;
             border-radius: 50px;
-            padding: 6px 14px 6px 12px;
+            padding: 10px 20px 10px 18px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: #ff99bb;
-            font-size: 0.7rem;
-            box-shadow: 0 4px 20px rgba(255, 45, 117, 0.1);
-            opacity: 0.6;
-            pointer-events: none;
-            transition: all 0.5s ease;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 4px 25px rgba(255, 45, 117, 0.4);
+            font-family: 'Segoe UI', 'Poppins', sans-serif;
+            letter-spacing: 0.5px;
         }
-        .music-indicator .icon {
-            font-size: 0.9rem;
+        .music-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 35px rgba(255, 45, 117, 0.6);
         }
-        .music-indicator .pulse-dot {
-            width: 6px;
-            height: 6px;
+        .music-btn:active {
+            transform: scale(0.95);
+        }
+        .music-btn .icon {
+            font-size: 1.2rem;
+        }
+        .music-btn .pulse-dot {
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            background: #ff2d75;
+            background: #fff;
             display: inline-block;
             animation: dotPulse 1.2s ease-in-out infinite;
         }
         @keyframes dotPulse {
-            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            0%, 100% { opacity: 0.4; transform: scale(0.8); }
             50% { opacity: 1; transform: scale(1.2); }
+        }
+        .music-btn.paused .pulse-dot {
+            animation: none;
+            opacity: 0.3;
+            transform: scale(0.6);
         }
 
         @media (max-width: 460px) {
@@ -508,7 +522,7 @@
             .judul-bucin { font-size: 1.8rem; }
             .long-text, .long-text-2 { font-size: 0.9rem; padding: 16px 14px; }
             .bg-falling img, .front-falling img { width: 40px !important; height: 40px !important; }
-            .music-indicator { bottom: 12px; right: 12px; padding: 4px 10px 4px 8px; font-size: 0.65rem; }
+            .music-btn { bottom: 12px; right: 12px; padding: 8px 14px 8px 12px; font-size: 0.75rem; }
             .slider-value { font-size: 1.8rem; }
         }
     </style>
@@ -557,7 +571,7 @@
     <div class="content">
 
         <div class="judul-bucin">
-            <span>✨ lily ✨</span>
+            <span>✨Love You lily ✨</span>
         </div>
 
         <div class="long-text" id="longText1">
@@ -590,7 +604,7 @@
                 </div>
                 <div class="slider-value" id="sliderValue">0<small>%</small></div>
                 <div class="slider-emoji" id="sliderEmoji">😐</div>
-                <div class="slider-hint">↕ geser atau klik track</div>
+                <div class="slider-hint">Geser yaaa sayang</div>
             </div>
         </div>
 
@@ -621,11 +635,12 @@
     </div>
 </div>
 
-<div class="music-indicator" id="musicIndicator">
+<!-- ===== BUTTON PLAY MUSIC ===== -->
+<button class="music-btn" id="musicBtn">
     <span class="icon">🎵</span>
-    <span id="musicStatus">♥ Love You</span>
+    <span id="musicLabel">Putar Lagu</span>
     <span class="pulse-dot"></span>
-</div>
+</button>
 
 <audio id="bgMusic" loop preload="auto">
     <source src="https://files.catbox.moe/ivazy9.mp3" type="audio/mpeg" />
@@ -635,7 +650,8 @@
     (function() {
         const loading = document.getElementById('loadingOverlay');
         const audio = document.getElementById('bgMusic');
-        const musicStatus = document.getElementById('musicStatus');
+        const musicBtn = document.getElementById('musicBtn');
+        const musicLabel = document.getElementById('musicLabel');
         const fotoWrappers = document.querySelectorAll('.foto-wrapper');
         const longText1 = document.getElementById('longText1');
         const longText2 = document.getElementById('longText2');
@@ -792,18 +808,37 @@
             }
         }, 400);
 
-        // === AUTO PLAY LAGU SETELAH LOADING (TANPA CLICK) ===
+        // === BUTTON PLAY MUSIC ===
+        musicBtn.addEventListener('click', function() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                musicLabel.textContent = 'Putar Lagu';
+                musicBtn.classList.add('paused');
+            } else {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    musicLabel.textContent = '♫ Lagu Diputar';
+                    musicBtn.classList.remove('paused');
+                }).catch(() => {
+                    musicLabel.textContent = 'Yahhh Gagal';
+                });
+            }
+        });
+
+        // === AUTO PLAY SETELAH LOADING ===
         setTimeout(() => {
             loading.classList.add('hidden');
             setTimeout(() => {
                 checkVisibility();
-                // Auto play lagu
+                // Coba auto play
                 audio.play().then(() => {
                     isPlaying = true;
-                    musicStatus.textContent = '♥ Love You ♪';
+                    musicLabel.textContent = '♫ Lagu Diputar';
+                    musicBtn.classList.remove('paused');
                 }).catch(() => {
-                    // Kalo di block browser, tetep jalan pas user klik pertama kali
-                    musicStatus.textContent = '♥ Klik buat putar';
+                    musicLabel.textContent = 'Putar Lagu';
+                    musicBtn.classList.add('paused');
                 });
             }, 300);
         }, 2500);
@@ -814,12 +849,9 @@
             audio.play().catch(() => {});
         });
 
-        // === GA ADA CLICK EVENT BUAT PLAY LAGU ===
-        // HANYA AUTO PLAY SAAT LOADING SELESAI
-
         audio.addEventListener('error', function(e) {
             console.log('Gagal load lagu:', e);
-            musicStatus.textContent = '♥ Gagal load lagu';
+            musicLabel.textContent = 'Gagal Load';
         });
     })();
 </script>
