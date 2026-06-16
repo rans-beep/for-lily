@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Untuk Lily 💖</title>
+    <title>Untuk Lily Dari Rans💖</title>
     <style>
         * {
             margin: 0;
@@ -233,10 +233,52 @@
             text-align: center;
             font-weight: 300;
             letter-spacing: 0.3px;
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+        }
+        .long-text.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
         }
         .long-text strong {
             color: #ff9ecb;
             font-weight: 600;
+        }
+        .long-text-2 {
+            background: #1e141e;
+            padding: 22px 18px;
+            border-radius: 32px;
+            margin: 16px 0 24px;
+            border-left: 4px solid #ff9ecb;
+            box-shadow: inset 0 2px 8px rgba(255, 60, 120, 0.05);
+            color: #f0dce8;
+            font-size: 1rem;
+            line-height: 1.9;
+            text-align: center;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
+        }
+        .long-text-2.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .long-text-2 .heart {
+            color: #ff2d75;
+            font-size: 1.1rem;
+            display: inline-block;
+            animation: denyut 1.8s infinite;
+        }
+        .long-text-2 .flower {
+            display: inline-block;
+            animation: floatFlower 3s ease-in-out infinite;
+        }
+        @keyframes floatFlower {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
         .galeri {
@@ -249,15 +291,41 @@
             border-radius: 28px;
             overflow: hidden;
             box-shadow: 0 12px 28px rgba(255, 30, 90, 0.15);
-            transition: transform 0.3s ease, box-shadow 0.4s ease;
             background: #1a0f1a;
             border: 1px solid #2d1a2a;
-            animation: jatuh 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-            animation-delay: calc(0.08s * var(--i, 1));
+            opacity: 0;
+            transform: translateY(70px) scale(0.85) rotate(-3deg);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), 
+                        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), 
+                        box-shadow 0.4s ease;
+            cursor: pointer;
+            /* ANIMASI GERAK TERUS MENERUS */
+            animation: floatPhoto 4s ease-in-out infinite;
+            animation-play-state: paused;
         }
+        .foto-wrapper.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1) rotate(0deg);
+            animation-play-state: running;
+        }
+        /* efek gerak melayang */
+        @keyframes floatPhoto {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        /* delay berbeda tiap foto biar geraknya gak bareng */
+        .foto-wrapper:nth-child(1) { animation-delay: 0s; transition-delay: 0s; }
+        .foto-wrapper:nth-child(2) { animation-delay: 0.6s; transition-delay: 0.08s; }
+        .foto-wrapper:nth-child(3) { animation-delay: 1.2s; transition-delay: 0.16s; }
+        .foto-wrapper:nth-child(4) { animation-delay: 0.3s; transition-delay: 0.24s; }
+        .foto-wrapper:nth-child(5) { animation-delay: 0.9s; transition-delay: 0.32s; }
+        .foto-wrapper:nth-child(6) { animation-delay: 1.5s; transition-delay: 0.40s; }
+
         .foto-wrapper:hover {
-            transform: scale(1.01) translateY(-4px);
-            box-shadow: 0 20px 40px rgba(255, 40, 110, 0.25);
+            transform: scale(1.03) translateY(-10px) !important;
+            box-shadow: 0 25px 50px rgba(255, 40, 110, 0.4);
+            animation-play-state: paused;
         }
         .foto-wrapper img {
             width: 100%;
@@ -271,28 +339,12 @@
             filter: brightness(1.08) contrast(1.05);
         }
 
-        @keyframes jatuh {
-            0% {
-                opacity: 0;
-                transform: translateY(-80px) scale(0.92);
-                filter: blur(4px);
-            }
-            70% {
-                transform: translateY(6px) scale(1);
-                filter: blur(0);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+        /* efek keluar saat scroll ke atas */
+        .foto-wrapper.exit {
+            opacity: 0.3;
+            transform: translateY(-30px) scale(0.9) rotate(2deg);
+            animation-play-state: paused;
         }
-
-        .foto-wrapper:nth-child(1) { --i: 1; }
-        .foto-wrapper:nth-child(2) { --i: 2; }
-        .foto-wrapper:nth-child(3) { --i: 3; }
-        .foto-wrapper:nth-child(4) { --i: 4; }
-        .foto-wrapper:nth-child(5) { --i: 5; }
-        .foto-wrapper:nth-child(6) { --i: 6; }
 
         .footer-cinta {
             text-align: center;
@@ -302,6 +354,13 @@
             border-top: 1px solid #2a1a2a;
             padding-top: 22px;
             letter-spacing: 0.5px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
+        }
+        .footer-cinta.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         .footer-cinta .hati {
             color: #ff2d75;
@@ -321,39 +380,48 @@
             font-size: 0.75rem;
         }
 
-        .music-control {
+        .music-indicator {
             position: fixed;
             bottom: 20px;
             right: 20px;
             z-index: 9999;
-            background: rgba(255, 45, 117, 0.15);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 45, 117, 0.3);
+            background: rgba(255, 45, 117, 0.12);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 45, 117, 0.2);
             border-radius: 50px;
-            padding: 8px 16px 8px 14px;
+            padding: 6px 14px 6px 12px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            gap: 8px;
             color: #ff99bb;
-            font-size: 0.85rem;
-            box-shadow: 0 4px 20px rgba(255, 45, 117, 0.2);
+            font-size: 0.7rem;
+            box-shadow: 0 4px 20px rgba(255, 45, 117, 0.1);
+            opacity: 0.6;
+            pointer-events: none;
+            transition: all 0.5s ease;
         }
-        .music-control:hover {
-            background: rgba(255, 45, 117, 0.25);
-            transform: scale(1.05);
+        .music-indicator .icon {
+            font-size: 0.9rem;
         }
-        .music-control .icon {
-            font-size: 1.2rem;
+        .music-indicator .pulse-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ff2d75;
+            display: inline-block;
+            animation: dotPulse 1.2s ease-in-out infinite;
+        }
+        @keyframes dotPulse {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
 
         @media (max-width: 460px) {
             .card { padding: 16px 14px 30px; }
             .judul-bucin { font-size: 1.8rem; }
-            .long-text { font-size: 0.95rem; padding: 18px 14px; }
+            .long-text, .long-text-2 { font-size: 0.9rem; padding: 16px 14px; }
             .bg-falling img, .front-falling img { width: 40px !important; height: 40px !important; }
-            .music-control { bottom: 12px; right: 12px; padding: 6px 12px 6px 10px; font-size: 0.75rem; }
+            .music-indicator { bottom: 12px; right: 12px; padding: 4px 10px 4px 8px; font-size: 0.65rem; }
         }
     </style>
 </head>
@@ -401,10 +469,10 @@
     <div class="content">
 
         <div class="judul-bucin">
-            <span>✨ lily ✨</span>
+            <span>✨ I Love You lily ✨</span>
         </div>
 
-        <div class="long-text">
+        <div class="long-text" id="longText1">
             <strong>i love you today, tomorrow forever,</strong><br />
             terimakasih telah hadir di hidupku,<br />
             bertemu dengan mu adalah hal tak pernah ku bayangkan sebelumnya.<br />
@@ -417,12 +485,31 @@
         </div>
 
         <div class="galeri">
-            <div class="foto-wrapper"><img src="https://files.catbox.moe/d1rjqk.jpg" alt="foto lily 1" loading="lazy" onerror="this.src='https://i.imgur.com/d1rjqk.jpg'" /></div>
-            <div class="foto-wrapper"><img src="https://files.catbox.moe/v5zqux.jpg" alt="foto lily 2" loading="lazy" onerror="this.src='https://i.imgur.com/v5zqux.jpg'" /></div>
-            <div class="foto-wrapper"><img src="https://files.catbox.moe/2m6nkd.jpg" alt="foto lily 3" loading="lazy" onerror="this.src='https://i.imgur.com/2m6nkd.jpg'" /></div>
-            <div class="foto-wrapper"><img src="https://files.catbox.moe/ei8dnx.jpg" alt="foto lily 4" loading="lazy" onerror="this.src='https://i.imgur.com/ei8dnx.jpg'" /></div>
-            <div class="foto-wrapper"><img src="https://files.catbox.moe/a7ryc3.jpg" alt="foto lily 5" loading="lazy" onerror="this.src='https://i.imgur.com/a7ryc3.jpg'" /></div>
-            <div class="foto-wrapper"><img src="https://files.catbox.moe/ldk9b3.jpg" alt="foto lily 6" loading="lazy" onerror="this.src='https://i.imgur.com/ldk9b3.jpg'" /></div>
+            <div class="foto-wrapper" data-audio="play"><img src="https://files.catbox.moe/d1rjqk.jpg" alt="foto lily 1" loading="lazy" onerror="this.src='https://i.imgur.com/d1rjqk.jpg'" /></div>
+            <div class="foto-wrapper" data-audio="play"><img src="https://files.catbox.moe/v5zqux.jpg" alt="foto lily 2" loading="lazy" onerror="this.src='https://i.imgur.com/v5zqux.jpg'" /></div>
+            <div class="foto-wrapper" data-audio="play"><img src="https://files.catbox.moe/2m6nkd.jpg" alt="foto lily 3" loading="lazy" onerror="this.src='https://i.imgur.com/2m6nkd.jpg'" /></div>
+            <div class="foto-wrapper" data-audio="play"><img src="https://files.catbox.moe/ei8dnx.jpg" alt="foto lily 4" loading="lazy" onerror="this.src='https://i.imgur.com/ei8dnx.jpg'" /></div>
+            <div class="foto-wrapper" data-audio="play"><img src="https://files.catbox.moe/a7ryc3.jpg" alt="foto lily 5" loading="lazy" onerror="this.src='https://i.imgur.com/a7ryc3.jpg'" /></div>
+            <div class="foto-wrapper" data-audio="play"><img src="https://files.catbox.moe/ldk9b3.jpg" alt="foto lily 6" loading="lazy" onerror="this.src='https://i.imgur.com/ldk9b3.jpg'" /></div>
+        </div>
+
+        <div class="long-text-2" id="longText2">
+            <span class="flower">🌺</span> <span class="flower">💐</span> <span class="flower">🌹</span><br /><br />
+            <strong>kamu adalah perempuan terakhir<br />
+            yang aku cintai dengan setulus ini</strong><br />
+            apapun nanti kedepannya aku akan<br />
+            tetap menyayangimu dan<br />
+            mencintaimu dengan sebaik-baiknya<br /><br />
+            iyaaa aku memang bukan<br />
+            cinta pertamamu, tetapi kamu harus tau<br />
+            kamuuu perempuan hebat yang<br />
+            mampu membuatku mencintaimu<br />
+            yang tak kan pernah berakhir<br /><br />
+            cintaku akan ku habiskan<br />
+            bersama mu selamanya<br /><br />
+            <span class="heart">❤️</span> i love you banyak banyak <span class="heart">❤️</span><span class="heart">❤️</span><span class="heart">❤️</span><br />
+            sayangku <span class="heart">💕</span> cintaku semestaku<br />
+            cantikku dunia ku <span class="heart">💕</span><span class="flower">🫂</span><span class="flower">🌺</span><span class="flower">💐</span><span class="flower">🌹</span><span class="flower">🥀</span><span class="flower">🌷</span><span class="flower">🌸</span><span class="heart">💋</span><span class="heart">💋</span><span class="heart">😘</span><span class="heart">🥰</span>
         </div>
 
         <div class="footer-cinta">
@@ -433,9 +520,10 @@
     </div>
 </div>
 
-<div class="music-control" id="musicControl">
-    <span class="icon" id="musicIcon">🔊</span>
-    <span id="musicLabel">♥ Love You</span>
+<div class="music-indicator" id="musicIndicator">
+    <span class="icon">🎵</span>
+    <span id="musicStatus">♥ Love You</span>
+    <span class="pulse-dot"></span>
 </div>
 
 <audio id="bgMusic" loop preload="auto">
@@ -446,45 +534,140 @@
     (function() {
         const loading = document.getElementById('loadingOverlay');
         const audio = document.getElementById('bgMusic');
-        const musicControl = document.getElementById('musicControl');
-        const musicIcon = document.getElementById('musicIcon');
-        const musicLabel = document.getElementById('musicLabel');
+        const fotoWrappers = document.querySelectorAll('.foto-wrapper');
+        const longText1 = document.getElementById('longText1');
+        const longText2 = document.getElementById('longText2');
+        const footer = document.querySelector('.footer-cinta');
+        const musicStatus = document.getElementById('musicStatus');
         let isPlaying = false;
+        let autoPlayAttempted = false;
+        let musicStarted = false;
 
-        function startMusic() {
+        // === SCROLL ANIMATION ===
+        function checkVisibility() {
+            const windowHeight = window.innerHeight;
+            const triggerPoint = windowHeight * 0.82;
+
+            if (longText1) {
+                const rect = longText1.getBoundingClientRect();
+                if (rect.top < triggerPoint && rect.bottom > 0) {
+                    longText1.classList.add('visible');
+                }
+            }
+
+            if (longText2) {
+                const rect = longText2.getBoundingClientRect();
+                if (rect.top < triggerPoint && rect.bottom > 0) {
+                    longText2.classList.add('visible');
+                }
+            }
+
+            fotoWrappers.forEach((wrapper) => {
+                const rect = wrapper.getBoundingClientRect();
+                const isVisible = rect.top < triggerPoint && rect.bottom > 0;
+                
+                if (isVisible) {
+                    wrapper.classList.add('visible');
+                    wrapper.classList.remove('exit');
+                } else if (rect.bottom < 0 || rect.top > windowHeight) {
+                    wrapper.classList.remove('visible');
+                    wrapper.classList.add('exit');
+                } else {
+                    wrapper.classList.remove('exit');
+                }
+            });
+
+            if (footer) {
+                const rect = footer.getBoundingClientRect();
+                if (rect.top < triggerPoint && rect.bottom > 0) {
+                    footer.classList.add('visible');
+                } else {
+                    footer.classList.remove('visible');
+                }
+            }
+        }
+
+        let ticking = false;
+        function onScroll() {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    checkVisibility();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', checkVisibility);
+        window.addEventListener('load', checkVisibility);
+
+        let intervalId = setInterval(() => {
+            checkVisibility();
+            let allVisible = true;
+            fotoWrappers.forEach(w => {
+                if (!w.classList.contains('visible')) allVisible = false;
+            });
+            if (allVisible && longText1?.classList.contains('visible') && longText2?.classList.contains('visible') && footer?.classList.contains('visible')) {
+                clearInterval(intervalId);
+            }
+        }, 400);
+
+        // === PLAY MUSIC SAAT FOTO DI KLIK ===
+        function playMusic() {
+            if (musicStarted) return;
+            musicStarted = true;
+            
             audio.play().then(() => {
                 isPlaying = true;
-                musicIcon.textContent = '🔊';
-                musicLabel.textContent = '♥ Love You';
+                musicStatus.textContent = '♥ Love You ♪';
             }).catch(() => {
                 isPlaying = false;
-                musicIcon.textContent = '🔇';
-                musicLabel.textContent = '♥ Dengerin Lagu';
+                musicStatus.textContent = '♥ Coba Click Fotonya ';
+                musicStarted = false;
             });
         }
 
-        setTimeout(() => {
-            loading.classList.add('hidden');
-            startMusic();
-        }, 2500);
+        fotoWrappers.forEach((wrapper) => {
+            wrapper.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (!musicStarted) {
+                    playMusic();
+                } else if (isPlaying) {
+                    audio.pause();
+                    isPlaying = false;
+                    musicStatus.textContent = '♥ Love You ♪';
+                } else {
+                    audio.play().then(() => {
+                        isPlaying = true;
+                        musicStatus.textContent = '♥ Love You ♪';
+                    }).catch(() => {
+                        musicStatus.textContent = '♥ Love You ♪';
+                    });
+                }
+            });
+        });
 
-        musicControl.addEventListener('click', function() {
-            if (isPlaying) {
-                audio.pause();
-                isPlaying = false;
-                musicIcon.textContent = '🔇';
-                musicLabel.textContent = '♥ Kok Di Pause';
-            } else {
-                audio.play().then(() => {
-                    isPlaying = true;
-                    musicIcon.textContent = '🔊';
-                    musicLabel.textContent = '♥ Love You';
-                }).catch(() => {
-                    musicIcon.textContent = '🔇';
-                    musicLabel.textContent = '♥ Gagal putar';
-                });
+        document.querySelector('.card')?.addEventListener('click', function(e) {
+            if (e.target.closest('.foto-wrapper')) return;
+            if (!musicStarted) {
+                playMusic();
             }
         });
+
+        setTimeout(() => {
+            loading.classList.add('hidden');
+            setTimeout(() => {
+                checkVisibility();
+                audio.play().then(() => {
+                    isPlaying = true;
+                    musicStarted = true;
+                    musicStatus.textContent = '♥ Love You ♪';
+                }).catch(() => {
+                    musicStatus.textContent = '♥ Klik foto buat putar';
+                });
+            }, 300);
+        }, 2500);
 
         audio.addEventListener('ended', function() {
             audio.currentTime = 0;
@@ -492,23 +675,19 @@
         });
 
         document.addEventListener('click', function firstClick() {
-            if (!isPlaying) {
+            if (!musicStarted) {
                 audio.play().then(() => {
                     isPlaying = true;
-                    musicIcon.textContent = '🔊';
-                    musicLabel.textContent = '♥ Love You';
+                    musicStarted = true;
+                    musicStatus.textContent = '♥ Love You ♪';
                 }).catch(() => {});
             }
             document.removeEventListener('click', firstClick);
         }, { once: true });
 
-        audio.addEventListener('loadeddata', function() {
-            console.log('Lagu siap diputar');
-        });
-
         audio.addEventListener('error', function(e) {
             console.log('Gagal load lagu:', e);
-            musicLabel.textContent = '♥ Gagal load lagu';
+            musicStatus.textContent = '♥ Gagal load lagu';
         });
     })();
 </script>
