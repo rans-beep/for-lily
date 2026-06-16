@@ -433,6 +433,106 @@
             letter-spacing: 1px;
         }
 
+        /* ===== GAME PERTANYAAN ===== */
+        .quiz-container {
+            margin: 20px 0 10px;
+            padding: 24px 18px;
+            background: #1a0f1a;
+            border-radius: 32px;
+            border: 1px solid #2d1a2a;
+            box-shadow: 0 8px 24px rgba(255, 30, 90, 0.08);
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease 0.75s, transform 0.8s ease 0.75s;
+            text-align: center;
+        }
+        .quiz-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .quiz-question {
+            color: #f0dce8;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+        .quiz-question .heart-icon {
+            color: #ff2d75;
+            animation: denyut 1.8s infinite;
+            display: inline-block;
+        }
+        .quiz-buttons {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .quiz-btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', 'Poppins', sans-serif;
+            letter-spacing: 0.5px;
+            min-width: 130px;
+        }
+        .quiz-btn-no {
+            background: #3a1a2a;
+            color: #b090a0;
+            border: 1px solid #4a2a3a;
+        }
+        .quiz-btn-no:hover {
+            background: #4a2a3a;
+            transform: scale(1.05);
+        }
+        .quiz-btn-yes {
+            background: linear-gradient(135deg, #ff2d75, #ff6b9d);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(255, 45, 117, 0.3);
+        }
+        .quiz-btn-yes:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(255, 45, 117, 0.5);
+        }
+        .quiz-btn:active {
+            transform: scale(0.95);
+        }
+        .quiz-result {
+            margin-top: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            min-height: 40px;
+            transition: all 0.3s ease;
+        }
+        .quiz-result.wrong {
+            color: #ff6b6b;
+            animation: shake 0.5s ease;
+        }
+        .quiz-result.correct {
+            color: #ff6b9d;
+            animation: pop 0.5s ease;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        @keyframes pop {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .quiz-result .big-heart {
+            font-size: 2.5rem;
+            display: block;
+            margin-top: 8px;
+            animation: denyut 0.8s infinite;
+        }
+
         .footer-cinta {
             text-align: center;
             margin-top: 30px;
@@ -524,6 +624,8 @@
             .bg-falling img, .front-falling img { width: 40px !important; height: 40px !important; }
             .music-btn { bottom: 12px; right: 12px; padding: 8px 14px 8px 12px; font-size: 0.75rem; }
             .slider-value { font-size: 1.8rem; }
+            .quiz-btn { padding: 10px 20px; font-size: 0.9rem; min-width: 100px; }
+            .quiz-question { font-size: 1rem; }
         }
     </style>
 </head>
@@ -608,6 +710,18 @@
             </div>
         </div>
 
+        <!-- ===== GAME PERTANYAAN ===== -->
+        <div class="quiz-container" id="quizContainer">
+            <div class="quiz-question">
+                <span class="heart-icon">💖</span> Kamu sayang aku ga? <span class="heart-icon">💖</span>
+            </div>
+            <div class="quiz-buttons">
+                <button class="quiz-btn quiz-btn-no" id="quizNo">Engga 😤</button>
+                <button class="quiz-btn quiz-btn-yes" id="quizYes">Sayang Banget! 🥰</button>
+            </div>
+            <div class="quiz-result" id="quizResult"></div>
+        </div>
+
         <div class="long-text-2" id="longText2">
             <span class="flower">🌺</span> <span class="flower">💐</span> <span class="flower">🌹</span><br /><br />
             <strong>kamu adalah perempuan terakhir<br />
@@ -657,7 +771,28 @@
         const longText2 = document.getElementById('longText2');
         const footer = document.querySelector('.footer-cinta');
         const gameContainer = document.getElementById('gameContainer');
+        const quizContainer = document.getElementById('quizContainer');
+        const quizResult = document.getElementById('quizResult');
         let isPlaying = false;
+
+        // === QUIZ ===
+        document.getElementById('quizNo').addEventListener('click', function() {
+            quizResult.className = 'quiz-result wrong';
+            quizResult.innerHTML = '❌ SALAH! Masa sih kamu ga sayang aku? 😭<br /><span style="font-size:0.9rem;opacity:0.7;">Coba lagi dong...</span>';
+            this.style.transform = 'scale(0.9)';
+            setTimeout(() => { this.style.transform = ''; }, 300);
+        });
+
+        document.getElementById('quizYes').addEventListener('click', function() {
+            quizResult.className = 'quiz-result correct';
+            quizResult.innerHTML = '✅ BENAR! Aku juga sayang banget sama kamu 💖<br /><span class="big-heart">🥰💕😘</span>';
+            this.style.transform = 'scale(1.1)';
+            setTimeout(() => { this.style.transform = ''; }, 300);
+            document.querySelector('.quiz-container').style.borderColor = '#ff6b9d';
+            setTimeout(() => {
+                document.querySelector('.quiz-container').style.borderColor = '#2d1a2a';
+            }, 2000);
+        });
 
         // === GAME SLIDER ===
         const track = document.getElementById('sliderTrack');
@@ -767,6 +902,13 @@
                 }
             }
 
+            if (quizContainer) {
+                const rect = quizContainer.getBoundingClientRect();
+                if (rect.top < triggerPoint && rect.bottom > 0) {
+                    quizContainer.classList.add('visible');
+                }
+            }
+
             fotoWrappers.forEach((wrapper) => {
                 const rect = wrapper.getBoundingClientRect();
                 if (rect.top < triggerPoint && rect.bottom > 0) {
@@ -803,7 +945,7 @@
             fotoWrappers.forEach(w => {
                 if (!w.classList.contains('visible')) allVisible = false;
             });
-            if (allVisible && longText1?.classList.contains('visible') && longText2?.classList.contains('visible') && footer?.classList.contains('visible') && gameContainer?.classList.contains('visible')) {
+            if (allVisible && longText1?.classList.contains('visible') && longText2?.classList.contains('visible') && footer?.classList.contains('visible') && gameContainer?.classList.contains('visible') && quizContainer?.classList.contains('visible')) {
                 clearInterval(intervalId);
             }
         }, 400);
@@ -831,7 +973,6 @@
             loading.classList.add('hidden');
             setTimeout(() => {
                 checkVisibility();
-                // Coba auto play
                 audio.play().then(() => {
                     isPlaying = true;
                     musicLabel.textContent = '♫ Lagu Diputar';
