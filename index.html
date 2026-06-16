@@ -778,14 +778,14 @@
         // === QUIZ ===
         document.getElementById('quizNo').addEventListener('click', function() {
             quizResult.className = 'quiz-result wrong';
-            quizResult.innerHTML = '❌ SALAH! Masa sih kamu ga sayang aku? 😭<br /><span style="font-size:0.9rem;opacity:0.7;">Coba lagi dong...</span>';
+            quizResult.innerHTML = 'Masa sih kamu ga sayang aku?🙄<br /><span style="font-size:0.9rem;opacity:0.7;">Coba click lagii</span>';
             this.style.transform = 'scale(0.9)';
             setTimeout(() => { this.style.transform = ''; }, 300);
         });
 
         document.getElementById('quizYes').addEventListener('click', function() {
             quizResult.className = 'quiz-result correct';
-            quizResult.innerHTML = '✅ BENAR! Aku juga sayang banget sama kamu 💖<br /><span class="big-heart">🥰💕😘</span>';
+            quizResult.innerHTML = 'Aku juga sayanggg sama. kamuu 💖<br /><span class="big-heart">🥰💕😘</span>';
             this.style.transform = 'scale(1.1)';
             setTimeout(() => { this.style.transform = ''; }, 300);
             document.querySelector('.quiz-container').style.borderColor = '#ff6b9d';
